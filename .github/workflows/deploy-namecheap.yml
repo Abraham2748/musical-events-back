@@ -1,0 +1,29 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download code
+        uses: actions/checkout@v4
+
+      - name: Update server-config.json
+        run: |
+          echo '{
+            "server": "${{ secrets.DB_SERVER }}",
+            "user": "${{ secrets.DB_USER }}",
+            "password": "${{ secrets.DB_PASSWORD }}",
+            "database": "${{ secrets.DB_DATABASE }}",
+            "port": "${{ secrets.DB_PORT }}"
+          }' > server-config.json
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
