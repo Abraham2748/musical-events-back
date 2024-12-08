@@ -11,12 +11,6 @@ $password = $connectionData["password"];
 $database = $connectionData["database"];
 $port = $connectionData["port"];
 
-// $server = 'localhost';
-// $user = 'root';
-// $password = '';
-// $database = 'test';
-// $port = '3306';
-
 $connection = new mysqli($server, $user, $password, $database, $port);
 if ($connection->connect_errno) {
     echo "Error connecting";
